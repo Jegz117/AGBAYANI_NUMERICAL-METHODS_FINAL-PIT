@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galactic Lagrange Interpolation Calculator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <div class="starfield" aria-hidden="true"></div>
+  <div class="hyperspace-line one" aria-hidden="true"></div>
+  <div class="hyperspace-line two" aria-hidden="true"></div>
+
+  <header class="site-header" id="top">
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="Galactic Lagrange home">
+        <span class="brand-mark">✦</span>
+        <span>Galactic Lagrange</span>
+      </a>
+      <div class="nav-links">
+        <a href="#discussion">Discussion</a>
+        <a href="#examples">Examples</a>
+        <a href="#calculator">Calculator</a>
+      </div>
+    </nav>
+
+    <section class="hero-panel reveal">
+      <div class="hero-copy">
+        <p class="eyebrow">Numerical Methods Online Calculator</p>
+        <h1>Lagrange Interpolation Calculator</h1>
+        <p class="hero-text">
+          Plot coordinates from across the galaxy, evaluate the interpolating polynomial, and inspect each basis contribution in a clean step-by-step console.
+        </p>
+        <div class="hero-actions">
+          <a href="#calculator" class="primary-btn">Launch Calculator</a>
+          <a href="#examples" class="secondary-btn">Review Examples</a>
+        </div>
+      </div>
+
+      <aside class="formula-card">
+        <p class="mini-label">Core Formula</p>
+        <div class="math-card">
+          \[P_n(x)=\sum_{k=0}^{n} y_kL_k(x)\]
+          \[L_k(x)=\prod_{\substack{j=0\\j\ne k}}^{n}\frac{x-x_j}{x_k-x_j}\]
+        </div>
+        <p class="formula-note">Use this method for equal or unequal spacing, provided all x-values are distinct.</p>
+      </aside>
+    </section>
+
+  </header>
+
+  <main>
+    <section class="section panel reveal" id="discussion">
+      <div class="section-heading">
+        <p class="eyebrow">Mathematical Discussion</p>
+        <h2>What is Lagrange Interpolation?</h2>
+      </div>
+      <p>
+        Lagrange interpolation constructs a unique polynomial of degree at most n that passes through n + 1 data points.
+        It is commonly used when x-values are not equally spaced because it does not require forward, backward, or central difference tables.
+      </p>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Any spacing</h3>
+          <p>The x-values may be equally or unequally spaced, as long as every x-value is distinct.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Basis logic</h3>
+          <p>Each basis polynomial becomes 1 at its own point and 0 at all other data points.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Best for small data sets</h3>
+          <p>The method is clear and effective for small n, but high-degree curves may oscillate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="examples">
+      <div class="section-heading center-heading">
+        <h2>Two Fully Worked Examples</h2>
+      </div>
+
+      <div class="example-grid compact-examples">
+        <article class="example-card panel">
+          <div class="example-header">
+            <div>
+              <p class="mini-label">Example 1</p>
+              <h3>Estimate y at x = 1.5</h3>
+            </div>
+            <button class="loadPreset" data-preset="example1" type="button">Load</button>
+          </div>
+          <p><strong>Given:</strong> (0, 2), (1, 3), (2, 6)</p>
+          <div class="solution-block worked-solution">
+            <p class="solution-label">Formula</p>
+            <p>\[P_2(x)=y_0L_0(x)+y_1L_1(x)+y_2L_2(x)\]</p>
+            <p class="solution-label">Substitute and evaluate the basis polynomials</p>
+            <p>\[L_0(1.5)=\frac{(1.5-1)(1.5-2)}{(0-1)(0-2)}=\frac{-0.25}{2}=-0.1250\]</p>
+            <p>\[L_1(1.5)=\frac{(1.5-0)(1.5-2)}{(1-0)(1-2)}=\frac{-0.75}{-1}=0.7500\]</p>
+            <p>\[L_2(1.5)=\frac{(1.5-0)(1.5-1)}{(2-0)(2-1)}=\frac{0.75}{2}=0.3750\]</p>
+            <p class="solution-label">Final substitution</p>
+            <p>\[P_2(1.5)=2(-0.1250)+3(0.7500)+6(0.3750)\]</p>
+            <p class="solution-label">Final answer</p>
+            <p class="final-answer">\[\boxed{P_2(1.5)=4.2500}\]</p>
+          </div>
+        </article>
+
+        <article class="example-card panel">
+          <div class="example-header">
+            <div>
+              <p class="mini-label">Example 2</p>
+              <h3>Estimate y at x = 1</h3>
+            </div>
+            <button class="loadPreset" data-preset="example2" type="button">Load</button>
+          </div>
+          <p><strong>Given:</strong> (-1, 4), (0, 1), (2, 3), (3, 10)</p>
+          <div class="solution-block worked-solution">
+            <p class="solution-label">Formula</p>
+            <p>\[P_3(x)=\sum_{k=0}^{3}y_kL_k(x)\]</p>
+            <p class="solution-label">Substitute and evaluate the basis polynomials</p>
+            <p>\[L_0(1)=\frac{(1-0)(1-2)(1-3)}{(-1-0)(-1-2)(-1-3)}=\frac{2}{-12}=-0.1667\]</p>
+            <p>\[L_1(1)=\frac{(1-(-1))(1-2)(1-3)}{(0-(-1))(0-2)(0-3)}=\frac{4}{6}=0.6667\]</p>
+            <p>\[L_2(1)=\frac{(1-(-1))(1-0)(1-3)}{(2-(-1))(2-0)(2-3)}=\frac{-4}{-6}=0.6667\]</p>
+            <p>\[L_3(1)=\frac{(1-(-1))(1-0)(1-2)}{(3-(-1))(3-0)(3-2)}=\frac{-2}{12}=-0.1667\]</p>
+            <p class="solution-label">Final substitution</p>
+            <p>\[P_3(1)=4(-0.1667)+1(0.6667)+3(0.6667)+10(-0.1667)\]</p>
+            <p class="solution-label">Final answer</p>
+            <p class="final-answer">\[\boxed{P_3(1)=0.3333}\]</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section calculator-shell panel reveal" id="calculator">
+      <div class="section-heading split-heading">
+        <div>
+          <p class="eyebrow">Interactive Calculator</p>
+          <h2>Data Point Console</h2>
+          <p class="section-note">Add coordinates, choose a target x, then inspect the basis computations below.</p>
+        </div>
+        <label class="toggle-line">
+          <input id="autoCalculate" type="checkbox" checked />
+          <span>Auto-calculate</span>
+        </label>
+      </div>
+
+      <div class="calculator-grid">
+        <div class="input-panel module-card">
+          <h3>Input Coordinates</h3>
+          <div class="toolbar">
+            <button id="addRow" type="button">+ Add Point</button>
+            <button id="clearRows" type="button">Clear</button>
+            <button id="randomDemo" type="button">Random Demo</button>
+            <button class="loadPreset" data-preset="example1" type="button">Sample 1</button>
+            <button class="loadPreset" data-preset="example2" type="button">Sample 2</button>
+          </div>
+
+          <p class="input-tip">Minimum of 2 points, maximum of 12. Duplicate x-values are rejected.</p>
+
+          <div class="table-wrap">
+            <table class="point-table">
+              <thead>
+                <tr><th>#</th><th>x</th><th>y</th><th>Action</th></tr>
+              </thead>
+              <tbody id="pointRows"></tbody>
+            </table>
+          </div>
+
+          <label class="target-label" for="targetX">Evaluate at x =</label>
+          <input id="targetX" class="target-input" type="number" step="any" value="" placeholder="Enter target x" />
+          <button id="calculateBtn" class="primary-btn full" type="button">Calculate Now</button>
+          <div id="errorBox" class="error-box hidden"></div>
+        </div>
+
+        <div class="output-panel">
+          <div class="result-card module-card">
+            <div class="badge-row">
+              <p class="mini-label" id="modeBadge">Result</p>
+              <span id="warningBadge" class="warning-badge hidden">Extrapolation warning</span>
+            </div>
+            <h3 id="resultValue">No calculation yet</h3>
+            <p id="polynomialText">Enter points and click calculate.</p>
+            <p id="rangeNote" class="range-note"></p>
+            <div class="result-actions">
+              <button id="copyResult" type="button">Copy Result</button>
+              <button id="copyFullSolution" type="button">Copy Solution</button>
+              <button id="downloadCsv" type="button">Export CSV</button>
+              <button id="downloadTxt" type="button">Download TXT</button>
+              <button id="printSolution" type="button">Print</button>
+            </div>
+          </div>
+          <div id="plot" class="plot-card module-card"></div>
+        </div>
+      </div>
+
+      <div class="steps-area" id="solutionArea">
+        <div class="section-heading small-heading">
+          <p class="eyebrow">Generated Solution</p>
+          <h3>Step-by-step Basis Computation</h3>
+        </div>
+        <div id="stepCards" class="step-grid"></div>
+        <details class="text-version">
+          <summary>Show copy/export text version</summary>
+          <pre id="fullSolution" class="full-solution">No solution generated yet.</pre>
+        </details>
+      </div>
+    </section>
+
+    <section class="section panel reveal force-thanks" id="thanks">
+      <div class="thanks-card">
+        <p class="eyebrow">Mission Complete</p>
+        <h2>Thank you for using the calculator.</h2>
+        <p class="force-line">May the Force be with You!</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Built with Flask, MathJax, Plotly, and vanilla JavaScript.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
