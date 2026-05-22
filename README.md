@@ -18,7 +18,6 @@ A Vercel-ready Numerical Methods online calculator focused on **Lagrange Interpo
 - Export solution steps as CSV
 - Download full solution as TXT
 - Print-friendly solution section
-- Light/dark theme toggle
 - Safe parsing: no `eval()`, no `exec()`, no formula execution
 - Modular code: algorithm logic is separated in `utils/lagrange.py`
 

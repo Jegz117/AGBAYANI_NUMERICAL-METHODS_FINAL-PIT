@@ -578,3 +578,125 @@ footer { text-align: center; padding: 36px 0 52px; }
     font-size: 82% !important;
   }
 }
+
+/* Expanded mathematical discussion section */
+.discussion-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 18px;
+  align-items: stretch;
+  margin-bottom: 18px;
+}
+
+.discussion-main p {
+  font-size: 1rem;
+}
+
+.discussion-formula-card,
+.formula-explain-card,
+.method-steps-card {
+  border: 1px solid rgba(255, 232, 111, .18);
+  border-radius: 22px;
+  background: rgba(255,255,255,.055);
+  padding: 20px;
+}
+
+.discussion-math {
+  margin: 12px 0;
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.08);
+  text-align: center;
+  overflow: visible;
+}
+
+.discussion-math mjx-container {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.formula-explain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.formula-explain-card h3,
+.method-steps-card h3 {
+  color: var(--accent);
+}
+
+.method-steps-card {
+  margin: 18px 0;
+}
+
+.method-steps-card ol {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--muted);
+}
+
+.method-steps-card li {
+  margin: 8px 0;
+}
+
+.footer-credit {
+  color: var(--accent);
+  font-weight: 950;
+  letter-spacing: .04em;
+  margin-top: 8px;
+}
+
+@media (max-width: 980px) {
+  .discussion-layout,
+  .formula-explain-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Final discussion formula fixes */
+.discussion-formula-card,
+.formula-explain-card,
+.method-steps-card {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.discussion-main,
+.discussion-formula-card p,
+.formula-explain-card p,
+.method-steps-card li {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.discussion-math {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.discussion-math mjx-container[jax="CHTML"][display="true"] {
+  overflow: visible !important;
+  max-width: 100% !important;
+}
+
+.discussion-math mjx-container {
+  font-size: 90% !important;
+  line-height: 1.35 !important;
+}
+
+.formula-explain-card .discussion-math mjx-container {
+  font-size: 82% !important;
+}
+
+@media (max-width: 1100px) {
+  .formula-explain-grid {
+    grid-template-columns: 1fr;
+  }
+  .formula-explain-card .discussion-math mjx-container,
+  .discussion-math mjx-container {
+    font-size: 88% !important;
+  }
+}
